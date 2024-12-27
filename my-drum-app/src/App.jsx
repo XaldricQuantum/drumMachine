@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import './App.css'
-import PadContainer from './padContainer'
-import DisplayContainer from './DisplayContainer'
+import PadContainer from './PadContainer.jsx'
+import DisplayContainer from './DisplayContainer.jsx'
 
 
 
