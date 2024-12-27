@@ -88,7 +88,7 @@ body {
   padding: 3px;
 }
 
-.pad {
+.drum-pad {
   position: relative;
   float: right;
   width: 90px;
@@ -105,7 +105,7 @@ body {
   /* box-shadow: 2px 2px 3px 2px hsl(0, 0%, 30%); */
 }
 
-.pad:hover {
+.drum-pad:hover {
   /* background-color: hsl(35, 81%, 46%); */
   background-color: rgb(141, 132, 109);
 

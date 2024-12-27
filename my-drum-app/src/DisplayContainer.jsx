@@ -1,11 +1,12 @@
 
 
 function DisplayContainer(props) {
-
-    console.log(props.displayText)
+    const style = {float: 'right'}
+    // console.log(props.displayText)
     const handleOnClickPower = (event) => {
-        console.log(event.target.style.float);
+        // console.log(event.target.style.float);
         // event.target.style.float = 'left'
+        props.updatePowerSwitch()
         if (event.target.style.float === 'right') {
             event.target.style.float = 'left'
         } else if (event.target.style.float === 'left') {
@@ -16,8 +17,10 @@ function DisplayContainer(props) {
     }
 
     const handleOnClickBank = (event) => {
-        console.log(event.target.style.float);
+        // console.log(event.target.style.float);
         // event.target.style.float = 'left'
+        props.updateBankSwitch()
+
         if (event.target.style.float === 'right') {
             event.target.style.float = 'left'
         } else if (event.target.style.float === 'left') {
@@ -29,17 +32,17 @@ function DisplayContainer(props) {
     }
 
     return(<div className="display-container">
-            <p className="display">{props.displayText}</p>
+            <p className="display" id="display">{props.displayText}</p>
             <p className="power-text">Power</p>
             <div className="power-container">
                 
-                <div className="power-selector" onClick={handleOnClickPower}></div>
+                <div className="power-selector" style={style} onClick={handleOnClickPower}></div>
             </div>
             <div className="divider"></div>
             <p className="power-text">Bank</p>
             <div className="power-container">
                 
-                <div className="bank-selector" onClick={handleOnClickBank}></div>
+                <div className="bank-selector" style={style} onClick={handleOnClickBank}></div>
             </div>
            </div>)
 

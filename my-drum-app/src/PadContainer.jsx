@@ -1,10 +1,11 @@
 
-
+import { useRef, useEffect } from "react"
 
 
 
 function PadContainer(props) {
-    const drums = [{
+    const audioRefs = useRef([])
+    const bank1 = [{
         keyCode: 81,
         keyTrigger: "Q",
         id: "Heater-1",
@@ -50,7 +51,9 @@ function PadContainer(props) {
         id: "Closed-HH",
         url: "https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3"
     }]
-      , t = [{
+    
+
+    const bank2 = [{
         keyCode: 81,
         keyTrigger: "Q",
         id: "Chord-1",
@@ -97,19 +100,42 @@ function PadContainer(props) {
         url: "https://s3.amazonaws.com/freecodecamp/drums/Brk_Snr.mp3"
     }]
     
-    const playSound = (drumDiv) => {
-        const sound = new Audio(drumDiv.url)
-        sound.play()
-    }
-    const handleClick = (drumDiv) => {
-        console.log(drumDiv.keyTrigger)
-        props.updateDisplayText(drumDiv.id)
-        playSound(drumDiv)
+    useEffect(() => {
+        const handleKeyDown = (event) => {
+            const index = drums.findIndex(drum => drum.keyTrigger === event.key.toUpperCase());
+            console.log(`pad -> useEffect ${props.powerSwitch}`);
+            
+            handleClick(index);
+        };
+        document.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [props]);
+
+    const handleClick = (index) => {
+        // console.log(audioRefs.current[index])
+        // console.log(drumDivs);
+        console.log(`handle click pops.power ${props.powerSwitch}`);
+        
+        console.log(`handle click ${props.powerSwitch & audioRefs.current[index]}`);
+        
+        
+        props.updateDisplayText(drums[index].id)
+        if (props.powerSwitch ) {
+            audioRefs.current[index].play()
+
+        }
         
     }
 
-    
-    const drumDivs = drums.map(drumDiv => <div className="pad" key={drumDiv.id} onClick={() => handleClick(drumDiv)}>{drumDiv.keyTrigger}</div>)
+    let drums = props.bankSwitch ? bank2 : bank1
+    const drumDivs = drums.map((drumDiv, index) => <div className="drum-pad" 
+                                id={drumDiv.id} key={index} 
+                                onClick={() => handleClick(index)}>{drumDiv.keyTrigger}
+                                    <audio className="clip" ref={el => audioRefs.current[index] = el} src={drumDiv.url} id={drumDiv.keyTrigger}></audio>
+                                </div>)
     
 
 

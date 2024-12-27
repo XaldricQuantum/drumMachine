@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import PadContainer from './padContainer'
 import DisplayContainer from './DisplayContainer'
@@ -8,16 +8,25 @@ import DisplayContainer from './DisplayContainer'
 function App() {
   const [displayText, setDisplayText] = useState("TEST")
   const [powerSwitch, setPowerSwitch] = useState(true)
-  const [bankSwitch, setBankSwitch] = useState(true)
+  const [bankSwitch, setBankSwitch] = useState(false)
 
   const updateDisplayText = (text) => {
     setDisplayText(text)
+    console.log(`Powe State ${powerSwitch}`)
   }
+  const updatePowerSwitch = () => setPowerSwitch(prev => !prev);
+  const updateBankSwitch = () => setBankSwitch(prev => !prev);
 
   return (
-    <div className="container">
-      <PadContainer updateDisplayText={updateDisplayText} />
-      <DisplayContainer displayText={displayText} />
+    <div className="container" id='drum-machine'>
+      <PadContainer updateDisplayText={updateDisplayText} 
+          powerSwitch={powerSwitch} 
+          bankSwitch={bankSwitch}
+          />
+      <DisplayContainer displayText={displayText} 
+          updatePowerSwitch={updatePowerSwitch} 
+          updateDisplayText={updateDisplayText}
+          updateBankSwitch={updateBankSwitch} />
 
     </div>
     
